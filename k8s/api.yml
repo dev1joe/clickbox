@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: brix
+
+---
+apiVersion: apps/v1
+kind: Deployment # what kind of Kubernetes object is this?
+metadata: # deployment metadata
+  name: api-deployment
+  namespace: brix
+  labels:
+    app: api
+spec: # Deployment Specifications (a description of the desired state)
+  replicas: 1
+  selector: # giving the deployment a way to know it's own pods
+    matchLabels:
+      app: api # all the pods that "match this label" belong to this deployment
+  template: # Pods configuration
+    metadata:
+      labels:
+        app: api
+    spec: # pods specification (blueprint to follow)
+      securityContext: # KSV-0118 explicit security context at pod level
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault # KSV-0104
+      containers: # Container Level
+        - name: api-app
+          image: brix:0.1.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          securityContext: # KSV-0118 explicit security context at container level
+            allowPrivilegeEscalation: false # KSV-0001
+            readOnlyRootFilesystem: true # KSV-0014
+            runAsNonRoot: true
+            runAsUser: 1000
+            capabilities:
+              drop: ["ALL"] # KSV-0003 / KSV-0004
+            seccompProfile:
+              type: RuntimeDefault
+          resources:
+            requests: # KSV-0015
+              cpu: 100m # specified in mili-cores
+              memory: 128Mi # defined in MebiBytes
+            limits: # KSV-0011
+              cpu: 500m
+              memory: 256Mi
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+
+---
+apiVersion: v1 # services are in the code api group, so you only use `v1`
+kind: Service
+metadata:
+  name: api-service
+  namespace: brix
+spec:
+  # by default this service is "internal"
+  # type: clusterIp # (default)
+  selector: # defines which pod to forward requests to
+    app: api
+  ports: # request -> service -> pod
+    - protocol: TCP
+      port: 3000 # service's port (prefarrably the same port as the pod)
+      targetPort: 3000 # pod's port

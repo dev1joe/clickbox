@@ -1,14 +1,14 @@
 {
-  "name": "hivebox",
-  "version": "0.0.1",
+  "name": "Brix",
+  "version": "0.1.1",
   "description": "",
-  "homepage": "https://github.com/dev1joe/devops-project-hivebox#readme",
+  "homepage": "https://github.com/dev1joe/brix#readme",
   "bugs": {
-    "url": "https://github.com/dev1joe/devops-project-hivebox/issues"
+    "url": "https://github.com/dev1joe/brix/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dev1joe/devops-project-hivebox.git"
+    "url": "git+https://github.com/dev1joe/brix.git"
   },
   "type": "module",
   "scripts": {
@@ -17,9 +17,13 @@
     "typecheck": "tsc --noEmit",
     "start": "node dist/index.js",
     "lint": "eslint .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:integration": "vitest run integration",
+    "test:smoke": "vitest run smoke"
   },
   "dependencies": {
+    "@prometheus-io/client": "^0.16.1",
     "express": "^5.3.0",
     "morgan": "^1.12.1"
   },
@@ -29,9 +33,11 @@
     "@types/morgan": "^1.9.10",
     "@types/node": "^26.6.5",
     "@types/supertest": "^7.2.1",
+    "@vitest/coverage-v8": "^5.0.4",
     "esbuild": "^0.28.2",
     "eslint": "^10.12.0",
     "globals": "^17.13.0",
+    "msw": "^3.0.3",
     "supertest": "^7.3.1",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",

@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-ingress
+  namespace: brix
+spec:
+  ingressClassName: nginx # tells Ingress-Nginx to handle his rule
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api-service # matches the api's service `metadata.name`
+                port:
+                  number: 3000 # api's service port
