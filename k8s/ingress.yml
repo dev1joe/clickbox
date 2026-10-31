@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: api-ingress
+  namespace: brix
 spec:
   ingressClassName: nginx # tells Ingress-Nginx to handle his rule
   rules:
