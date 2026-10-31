@@ -1,6 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import request from "supertest";
-import { app } from "../app"
+import { createApp } from "../app"
+import { createContainer } from "../container";
+
+const container = createContainer()
+const app = createApp(container)
 
 beforeEach(() => {
   vi.spyOn(console, "error").mockImplementation(() => { });

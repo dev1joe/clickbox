@@ -73,6 +73,7 @@ kubectl wait --namespace ingress-nginx \
   --selector=app.kubernetes.io/component=controller \
   --timeout=90s
 ```
+- learned about multiple Kubernetes vulnerabilities (e.x. [KSV-0015](https://avd.aquasec.com/misconfig/kubernetes/general/ksv-0015/) & [KSV-0118](https://avd.aquasec.com/misconfig/kubernetes/general/ksv-0118/))
 
 ##### CI expantion
 - read [Best practices when adopting continuous integration](https://github.com/resources/articles/continuous-integration#best-practices-when-adopting-continuous-integration)

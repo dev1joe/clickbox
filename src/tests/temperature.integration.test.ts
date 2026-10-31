@@ -2,7 +2,11 @@ import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } 
 import { http, HttpResponse, passthrough } from "msw";
 import { setupServer } from "msw/node";
 import request from "supertest";
-import { app } from "../app.ts";
+import { createApp } from "../app"
+import { createContainer } from "../container";
+
+const container = createContainer()
+const app = createApp(container)
 
 beforeEach(() => {
   vi.spyOn(console, "error").mockImplementation(() => { });

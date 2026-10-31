@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import request from "supertest";
-import { app } from "../app";
+import { createApp } from "../app"
+import { createContainer } from "../container";
+
+const container = createContainer()
+const app = createApp(container)
 
 describe("GET /api/temperature", () => {
   it("returns a plausible temperature", { timeout: 30_000 }, async () => {

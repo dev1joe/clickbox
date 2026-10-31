@@ -17,7 +17,11 @@ vi.mock("../utils", async (orig) => ({
 }));
 
 import { getAvgTemp } from "../utils";
-import { app } from "../app";
+import { createContainer } from "../container";
+import { createApp } from "../app";
+
+const container = createContainer();
+const app = createApp(container);
 
 describe("error handling through the app", () => {
   it("returns 500 for unknown errors", async () => {

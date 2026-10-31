@@ -23,9 +23,12 @@
     "test:smoke": "vitest run smoke"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1161.0",
     "@prometheus-io/client": "^0.16.1",
     "express": "^5.3.0",
-    "morgan": "^1.12.1"
+    "ioredis": "^6.0.0",
+    "morgan": "^1.12.1",
+    "node-cron": "^4.6.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
